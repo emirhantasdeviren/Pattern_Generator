@@ -55,7 +55,7 @@ void drawRectangle(int coordinate[N][N]) {
 
             if(coordinate[i][j] == 1) {
 
-                printf("*");
+                printf("\u2592");
             }
 
             else {
