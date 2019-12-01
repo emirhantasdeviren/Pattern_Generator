@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-#define N 21
+#define N       21
+#define font    178
 
 int evenOdd(int x) {
     if(x % 2 == 0) {
@@ -39,7 +40,7 @@ void drawH(int coord[N][N]) {
     for(j = 0; j <= N-1; j++) {
         for(i = 0; i <= N-1; i++) {
             if(coord[i][j] == 1) {
-                printf("\u2592");
+                printf("%c", font);
             }
             else {
                 printf(" ");

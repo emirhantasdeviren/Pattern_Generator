@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
-#define N 21
+
+#define N       21
+#define font    178
 
 int evenOdd(int x) {
 
@@ -55,7 +57,7 @@ void drawRectangle(int coordinate[N][N]) {
 
             if(coordinate[i][j] == 1) {
 
-                printf("\u2592");
+                printf("%c", font);
             }
 
             else {

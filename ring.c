@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#define N 21
+#define N       21
+#define font    178
 
 void fillSys(int coor[N][N], int r1, int r2) {
 
@@ -28,7 +29,7 @@ void drawRing(int coor[N][N]) {
 
             if(coor[i][j] == 1) {
 
-                printf("\u2592");
+                printf("%c", font);
             }
 
             else {
