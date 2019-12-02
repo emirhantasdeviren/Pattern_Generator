@@ -1,5 +1,5 @@
 # Pattern Generator
-## EE103 - Introduction to Programming Project
+## EE103 - Introduction to Programming | Project
 The goal of this project is to generate different patterns using base patterns. The final patterns generated can be displayed either as an image or from .txt flie using printf library function.
 
 ### Level 1
