@@ -1,30 +1,14 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 #define N       21
 #define font    178
 
 int evenOdd(int x) {
-
-    bool isEven;
-
-    if (x % 2 == 0) {
-
-        isEven = true;
-    }
-
-    else {
-
-        isEven = false;
-    }
-
-    if(isEven == true) {
-
+    if(x % 2 == 0) {
         return -1;
     }
 
     else {
-
         return 0;
     }
 }
@@ -35,13 +19,10 @@ void fillSys(int coordinate[N][N], int w, int h) {
     int j = ((N-1)/2) - (h/2);
 
     while(j <= ((N-1)/2) + (h/2) + evenOdd(h)) {
-
         while(i <= ((N-1)/2) + (w/2) + evenOdd(w)) {
-
-            coordinate[i][j] = 1;
+            coordinate[j][i] = 1;
             i++;
         }
-
         i = ((N-1)/2) - (w/2);
         j++;
     }
@@ -51,21 +32,15 @@ void drawRectangle(int coordinate[N][N]) {
 
     int i, j;
 
-    for(j = 0; j < N; j++) {
-        
+    for(j = 0; j < N; j++) { 
         for(i = 0; i < N; i++) {
-
-            if(coordinate[i][j] == 1) {
-
+            if(coordinate[j][i] == 1) {
                 printf("%c", font);
             }
-
             else {
-
                 printf(" ");
             }
         }
-
         printf("\n");
     }
 }
