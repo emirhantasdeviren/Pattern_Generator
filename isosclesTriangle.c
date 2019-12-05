@@ -18,8 +18,8 @@ void fillTriangle(int coord[N][N], int h) {
     bool print;
 
     int center  = (N-1) / 2;
-    int top     = center + (h/2);
-    int bottom  = center - (h/2) + evenOdd(h);
+    int top     = center + (h/2) + evenOdd(h);
+    int bottom  = center - (h/2);
 
     for(j = 0; j <= N-1; j++) {
         for(i = 0; i <= N-1; i++) {
