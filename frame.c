@@ -13,28 +13,28 @@ int evenOdd(int x) {
     }
 }
 
-void fillSys(int coordinate[N][N], int w, int h) {
-int i,j;
-int center  =   (N-1)/2;
+void fillFrame(int coordinate[N][N], int w, int h) {
+    int i,j;
+
+    int center  =   (N-1)/2;
     int leftEnd =   center - (w/2);
     int rightEnd=   center + (w/2) + evenOdd(w);
     int top     =   center - (h/2);
     int bottom  =   center + (h/2) + evenOdd(h);
 
-   for(j=0;j<N;j++){
-	for(i=0;i<N;i++){
+    for(j = 0; j < N; j++){
+        for(i = 0; i < N; i++){
             if((i == leftEnd || i == rightEnd) && (j <= bottom && j >= top)){
-            	coordinate[j][i]=1;
-			}
-			else if((j == top || j == bottom) && (i <= rightEnd && i >= leftEnd)){
-            	coordinate[j][i]=1;
-			}
-	
-	}
-}
+                coordinate[j][i]=1;
+            }
+            else if((j == top || j == bottom) && (i <= rightEnd && i >= leftEnd)){
+                coordinate[j][i]=1;
+            }
+        }
+    }
 }
 
-void drawRectangle(int coordinate[N][N]) {
+void drawFrame(int coordinate[N][N]) {
 
     int i, j;
 
@@ -62,9 +62,9 @@ int main(void) {
     printf("Please enter height of your rectangle: ");
     scanf("%i", &h);
 
-    fillSys(coordinate, w, h);
+    fillFrame(coordinate, w, h);
 
-    drawRectangle(coordinate);
+    drawFrame(coordinate);
 
     return 0;
 }

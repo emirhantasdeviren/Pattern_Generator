@@ -13,34 +13,34 @@ int evenOdd(int x) {
     }
 }
 
-void fillSys(int coordinate[N][N], int w, int h) {
-int i,j;
-int center  =   (N-1)/2;
+void fillPlus(int coord[N][N], int w, int h) {
+    int i,j;
+
+    int center  =   (N-1)/2;
     int leftEnd =   center - (w/2);
     int rightEnd=   center + (w/2) + evenOdd(w);
     int top     =   center - (h/2);
     int bottom  =   center + (h/2) + evenOdd(h);
 
-   for(j=0;j<N;j++){
-	for(i=0;i<N;i++){
+    for(j = 0; j < N; j++){
+        for(i = 0; i < N; i++){
             if(i == center && (j<=bottom && j>=top)){
-            	coordinate[j][i]=1;
-			}
-			else if(j == center && (i<=rightEnd && i>=leftEnd) ){
-            	coordinate[j][i]=1;
-			}
-	
-	}
-}
+                coord[j][i]=1;
+            }
+            else if(j == center && (i<=rightEnd && i>=leftEnd) ){
+            	coord[j][i]=1;
+            }
+	    }
+    }
 }
 
-void drawRectangle(int coordinate[N][N]) {
+void drawPlus(int coord[N][N]) {
 
     int i, j;
 
     for(j = 0; j < N; j++) { 
         for(i = 0; i < N; i++) {
-            if(coordinate[j][i] == 1) {
+            if(coord[j][i] == 1) {
                 printf("%c", font);
             }
             else {
@@ -53,18 +53,18 @@ void drawRectangle(int coordinate[N][N]) {
 
 int main(void) {
 
-    int coordinate[N][N]= {0};
+    int coord[N][N]= {0};
     int w, h;
 
-    printf("Please enter width of your rectangle: ");
+    printf("Please enter width of your plus: ");
     scanf("%i", &w);
 
-    printf("Please enter height of your rectangle: ");
+    printf("Please enter height of your plus: ");
     scanf("%i", &h);
 
-    fillSys(coordinate, w, h);
+    fillPlus(coord, w, h);
 
-    drawRectangle(coordinate);
+    drawPlus(coord);
 
     return 0;
 }
