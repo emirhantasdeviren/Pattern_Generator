@@ -3,7 +3,7 @@
 #define N       21
 #define font    178
 
-int evenOdd(int x) {
+short even_odd(unsigned short x) {
     if(x % 2 == 0) {
         return -1;
     }
@@ -13,34 +13,34 @@ int evenOdd(int x) {
     }
 }
 
-void fillFrame(int coordinate[N][N], int w, int h) {
-    int i,j;
+void fill_frame(unsigned short coord[N][N], unsigned short w, unsigned short h) {
+    unsigned short i,j;
 
-    int center  =   (N-1)/2;
-    int leftEnd =   center - (w/2);
-    int rightEnd=   center + (w/2) + evenOdd(w);
-    int top     =   center - (h/2);
-    int bottom  =   center + (h/2) + evenOdd(h);
+    unsigned short center   =   (N-1)/2;
+    unsigned short left_end =   center - (w/2);
+    unsigned short right_end=   center + (w/2) + even_odd(w);
+    unsigned short top      =   center - (h/2);
+    unsigned short bottom   =   center + (h/2) + even_odd(h);
 
-    for(j = 0; j < N; j++){
-        for(i = 0; i < N; i++){
-            if((i == leftEnd || i == rightEnd) && (j <= bottom && j >= top)){
-                coordinate[j][i]=1;
+    for (j = 0; j < N; j++){
+        for (i = 0; i < N; i++){
+            if ((i == left_end || i == right_end) && (j <= bottom && j >= top)){
+                coord[j][i] = 1;
             }
-            else if((j == top || j == bottom) && (i <= rightEnd && i >= leftEnd)){
-                coordinate[j][i]=1;
+            else if ((j == top || j == bottom) && (i <= right_end && i >= left_end)){
+                coord[j][i] = 1;
             }
         }
     }
 }
 
-void drawFrame(int coordinate[N][N]) {
+void draw_frame(unsigned short coord[N][N]) {
 
-    int i, j;
+    unsigned short i, j;
 
-    for(j = 0; j < N; j++) { 
-        for(i = 0; i < N; i++) {
-            if(coordinate[j][i] == 1) {
+    for (j = 0; j < N; j++) { 
+        for (i = 0; i < N; i++) {
+            if (coord[j][i] == 1) {
                 printf("%c", font);
             }
             else {
@@ -53,18 +53,18 @@ void drawFrame(int coordinate[N][N]) {
 
 int main(void) {
 
-    int coordinate[N][N]= {0};
-    int w, h;
+    unsigned short coord[N][N]= {0};
+    unsigned short w, h;
 
     printf("Please enter width of your rectangle: ");
-    scanf("%i", &w);
+    scanf("%hu", &w);
 
     printf("Please enter height of your rectangle: ");
-    scanf("%i", &h);
+    scanf("%hu", &h);
 
-    fillFrame(coordinate, w, h);
+    fill_frame(coord, w, h);
 
-    drawFrame(coordinate);
+    draw_frame(coord);
 
     return 0;
 }
