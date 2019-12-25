@@ -3,7 +3,7 @@
 #define N       21
 #define font    178
 
-int evenOdd(int x) {
+int even_odd(int x) {
     if(x % 2 == 0) {
         return -1;
     }
@@ -13,14 +13,14 @@ int evenOdd(int x) {
     }
 }
 
-void fillPlus(int coord[N][N], int w, int h) {
+void fill_plus(int coord[N][N], int w, int h) {
     int i,j;
 
     int center  =   (N-1)/2;
     int leftEnd =   center - (w/2);
-    int rightEnd=   center + (w/2) + evenOdd(w);
+    int rightEnd=   center + (w/2) + even_odd(w);
     int top     =   center - (h/2);
-    int bottom  =   center + (h/2) + evenOdd(h);
+    int bottom  =   center + (h/2) + even_odd(h);
 
     for(j = 0; j < N; j++){
         for(i = 0; i < N; i++){
@@ -34,7 +34,7 @@ void fillPlus(int coord[N][N], int w, int h) {
     }
 }
 
-void drawPlus(int coord[N][N]) {
+void draw_plus(int coord[N][N]) {
 
     int i, j;
 
@@ -62,9 +62,9 @@ int main(void) {
     printf("Please enter height of your plus: ");
     scanf("%i", &h);
 
-    fillPlus(coord, w, h);
+    fill_plus(coord, w, h);
 
-    drawPlus(coord);
+    draw_plus(coord);
 
     return 0;
 }

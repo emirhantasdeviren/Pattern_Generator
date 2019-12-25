@@ -4,7 +4,7 @@
 #define N       21
 #define font    178
 
-void fillSys(int coor[N][N], int r1, int r2) {
+void fill_ring(int coor[N][N], int r1, int r2) {
     int i, j;
 
     for(j = 0; j <= N-1; j++) {
@@ -16,7 +16,7 @@ void fillSys(int coor[N][N], int r1, int r2) {
     }
 }
 
-void drawRing(int coor[N][N]) {
+void draw_ring(int coor[N][N]) {
     int i, j;
 
     for(j = 0; j <= N-1; j++) {
@@ -42,9 +42,9 @@ int main(void) {
     printf("Please enter radius of small circle: ");
     scanf("%i", &r2);
 
-    fillSys(coordinate, r1, r2);
+    fill_ring(coordinate, r1, r2);
 
-    drawRing(coordinate);
+    draw_ring(coordinate);
 
     return 0;
 }

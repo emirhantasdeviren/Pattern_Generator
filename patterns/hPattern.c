@@ -3,7 +3,7 @@
 #define N       21
 #define font    178
 
-int evenOdd(int x) {
+int even_odd(int x) {
     if(x % 2 == 0) {
         return -1;
     }
@@ -13,14 +13,14 @@ int evenOdd(int x) {
     }
 }    
 
-void fillH(int coord[N][N], int w, int h) {
+void fill_h(int coord[N][N], int w, int h) {
     int i, j;
 
     int center      =   (N-1)/2;
     int leftEnd     =   center - (w/2);
-    int rightEnd    =   center + (w/2) + evenOdd(w);
+    int rightEnd    =   center + (w/2) + even_odd(w);
     int bottom      =   center - (h/2);
-    int top         =   center + (h/2) + evenOdd(h);
+    int top         =   center + (h/2) + even_odd(h);
 
     for(j = 0; j <= N-1; j++) {
         for(i = 0; i <= N-1; i++) {
@@ -34,7 +34,7 @@ void fillH(int coord[N][N], int w, int h) {
     }
 }
 
-void drawH(int coord[N][N]) {
+void draw_h(int coord[N][N]) {
     int i, j;
 
     for(j = 0; j <= N-1; j++) {
@@ -61,9 +61,9 @@ int main(void) {
     printf("Please enter the height: ");
     scanf("%i", &h);
 
-    fillH(coord, w, h);
+    fill_h(coord, w, h);
 
-    drawH(coord);
+    draw_h(coord);
     
     return 0;
 }

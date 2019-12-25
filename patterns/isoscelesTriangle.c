@@ -3,7 +3,7 @@
 
 #define N 21
 
-int evenOdd(int x) {
+int even_odd(int x) {
     if(x % 2 == 0) {
         return -1;
     }
@@ -13,12 +13,12 @@ int evenOdd(int x) {
     }
 }
 
-void fillTriangle(int coord[N][N], int h) {
+void fill_triangle(int coord[N][N], int h) {
     int i, j, w = 0;
     bool print;
 
     int center  = (N-1) / 2;
-    int top     = center + (h/2) + evenOdd(h);
+    int top     = center + (h/2) + even_odd(h);
     int bottom  = center - (h/2);
 
     for(j = 0; j <= N-1; j++) {
@@ -35,7 +35,7 @@ void fillTriangle(int coord[N][N], int h) {
     }
 }
 
-void drawTriangle(int coord[N][N]) {
+void draw_triangle(int coord[N][N]) {
     int i, j;
 
     for(j = 0; j <= N-1; j++) {
@@ -58,9 +58,9 @@ int main(void) {
     printf("Please enter height of your triangle:");
     scanf("%i", &h);
 
-    fillTriangle(coord, h);
+    fill_triangle(coord, h);
 
-    drawTriangle(coord);
+    draw_triangle(coord);
 
     return 0;
 }
