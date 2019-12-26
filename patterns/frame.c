@@ -24,10 +24,10 @@ void fill_frame(unsigned short coord[N][N], unsigned short w, unsigned short h, 
 
     for (j = 0; j < N; j++){
         for (i = 0; i < N; i++){
-            if ((i >= left_end && i<= left_end+t || i <= right_end && i >= right_end-t) && (j <= bottom && j >= top)){
+            if (((i >= left_end && i <= left_end+t) || (i <= right_end && i >= right_end-t)) && (j <= bottom && j >= top)){
                 coord[j][i] = 1;
             }
-            else if ((j >= top && j<=top+t || j <= bottom && j>= bottom-t) && (i <= right_end && i >= left_end+t)){
+            else if (((j >= top && j <= top+t) || (j <= bottom && j >= bottom-t)) && ((i <= right_end-t) && (i >= left_end+t))){
                 coord[j][i] = 1;
             }
         }
