@@ -11,12 +11,18 @@ double ellipse_f(double x, double y, double a, double b) {
     return (z);
 }
 
-void fill_ellipse(double coord[K][K], unsigned short a, unsigned short b) {
+void fill_ellipse(double coord[K][K]) {
     unsigned short r, c;
+    unsigned short a, b;
     double x = -20/2, y = 20/2;
 
-    for (r = 0; r < 201; r++) {
-        for (c = 0; c < 201; c++) {
+    printf("Enter a: ");
+    scanf("%hu", &a);
+    printf("Enter b: ");
+    scanf("%hu", &b);
+
+    for (r = 0; r < K; r++) {
+        for (c = 0; c < K; c++) {
             coord[r][c] = ellipse_f(x, y,(double) a/10,(double) b/10);
             x += 0.1;
         }
@@ -32,7 +38,7 @@ void draw_ellipse(double coord[K][K], bool *main_arr, unsigned short main_arr_si
 
     for (r = center - 10; r <= center + 10; r++) {
         for (c = center - 10; c <= center + 10; c++) {
-            if (coord[r][c] < 1.1 && coord[r][c] > 0.8) {
+            if (coord[r][c] < 1.3 && coord[r][c] > 0.7) {
                 *((main_arr+(main_arr_i*main_arr_size_j)) + main_arr_j) = true;
             }
             main_arr_j++;

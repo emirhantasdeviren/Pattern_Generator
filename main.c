@@ -32,12 +32,11 @@ int main(void) {
     }
 
     double coord[K][K] = {0};
-    unsigned short a = 6, b = 6;
 
     for(i = 0; i < r; i++) {
         for (j = 0; j < c; j++) {
             if (menu_assign[i][j] == 1) {
-                fill_ellipse(coord, a, b);
+                fill_ellipse(coord);
                 draw_ellipse(coord, (bool *)main_arr, main_arr_size_j, &pattern_number, column_number);
             }
         }
