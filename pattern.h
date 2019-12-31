@@ -2,54 +2,37 @@
 #define N 21
 #define font '*'
 
+#define MAX_W 640
+#define MAX_H 360
+#define CENTER_X 320
+#define CENTER_Y 180
+
 //Ellipse
 //------------------------------------------------------------------------
 
-double ellipse_f(double x, double y, double a, double b) {
-    double z = (pow(x, 2)/pow(a, 2)) + (pow(y, 2)/pow(b, 2));
+void fill_ellipse(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    ssize_t r, c;
+    size_t a, b;
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
 
-    return (z);
-}
+    printf("\nEnter a of your Ellipse: ");
+    scanf("%zu", &a);
+    printf("Enter b of your Ellipse: ");
+    scanf("%zu", &b);
 
-void fill_ellipse(double coord[K][K]) {
-    unsigned short r, c;
-    unsigned short a, b;
-    double x = -20/2, y = 20/2;
-
-    printf("Enter a: ");
-    scanf("%hu", &a);
-    printf("Enter b: ");
-    scanf("%hu", &b);
-
-    for (r = 0; r < K; r++) {
-        for (c = 0; c < K; c++) {
-            coord[r][c] = ellipse_f(x, y,(double) a/10,(double) b/10);
-            x += 0.1;
-        }
-        x = -10;
-        y -= 0.1;
-    }
-}
-
-void draw_ellipse(double coord[K][K], bool *main_arr, unsigned short main_arr_size_j, unsigned short *pattern_number, unsigned short column_number) {
-    unsigned short r, c, center = (K-1)/2;
-    unsigned short main_arr_j = N*(*pattern_number);
-    unsigned short main_arr_i = N*(column_number);
-
-    for (r = center - 10; r <= center + 10; r++) {
-        for (c = center - 10; c <= center + 10; c++) {
-            if (coord[r][c] < 1.3 && coord[r][c] > 0.7) {
-                *((main_arr+(main_arr_i*main_arr_size_j)) + main_arr_j) = true;
+    for (r = 0; r < MAX_H; r++) {
+        for (c = 0; c < MAX_W; c++) {
+            if ((pow(r - CENTER_Y, 2) / pow(a, 2)) + (pow(c - CENTER_X, 2) / pow(b, 2)) <= 1) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
             main_arr_j++;
         }
-        main_arr_j = N*(*pattern_number);
+        main_arr_j = MAX_W * (*pattern_number);
         main_arr_i++;
     }
-
     (*pattern_number)++;
 }
-
 //------------------------------------------------------------------------
 // Rectangle
 //------------------------------------------------------------------------
@@ -64,287 +47,288 @@ int even_odd(int x) {
     }
 }
 
-void fill_rectangle(int coordinate[N][N], int w, int h) {
+void fill_rectangle(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
+    size_t i, j, w, h;
 
-    int i = ((N-1)/2) - (w/2);
-    int j = ((N-1)/2) - (h/2);
+    printf("\nEnter height of your Rectangle: ");
+    scanf("%zu", &h);
+    printf("Enter width of your Rectangle: ");
+    scanf("%zu", &w);
 
-    while(j <= ((N-1)/2) + (h/2) + even_odd(h)) {
-        while(i <= ((N-1)/2) + (w/2) + even_odd(w)) {
-            coordinate[j][i] = 1;
-            i++;
-        }
-        i = ((N-1)/2) - (w/2);
-        j++;
-    }
-}
+    size_t left_end = CENTER_X - (w/2);
+    size_t right_end= CENTER_X + (w/2) + even_odd(w);
+    size_t top      = CENTER_Y - (h/2);
+    size_t bottom   = CENTER_Y + (h/2) + even_odd(h);
 
-void draw_rectangle(int coordinate[N][N]) {
-
-    int i, j;
-
-    for(j = 0; j < N; j++) { 
-        for(i = 0; i < N; i++) {
-            if(coordinate[j][i] == 1) {
-                printf("%c", font);
+    for (i = 0; i < MAX_H; i++) {
+        for (j = 0; j < MAX_W; j++) {
+            if ((j <= right_end && j >= left_end) && (i == top || i == bottom)) {
+                *((main_arr+(main_arr_i*main_arr_size_j)) + main_arr_j) = true;
             }
-            else {
-                printf(" ");
+            else if ((j == left_end || j == right_end) && (i <= bottom && i >= top)) {
+                *((main_arr+(main_arr_i*main_arr_size_j)) + main_arr_j) = true;
             }
+            main_arr_j++;
         }
-        printf("\n");
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 //Isosceles Triangle
 //------------------------------------------------------------------------
 
-void fill_triangle(int coord[N][N], int h) {
-    int i, j, w = 0;
+void fill_triangle(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t main_arr_i = MAX_H * (column_number);
+    size_t main_arr_j = MAX_W * (*pattern_number);
+    size_t i, j, w = 0, h;
     bool print;
 
-    int center  = (N-1) / 2;
-    int top     = center + (h/2) + even_odd(h);
-    int bottom  = center - (h/2);
+    printf("\nEnter height of your Isosceles Triangle: ");
+    scanf("%zu", &h);
 
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if((j <= top && j >= bottom) && (i <= (center + w) && i >= (center - w))) {
-                coord[j][i] = 1;
+    size_t top     = CENTER_Y + (h/2) + even_odd(h);
+    size_t bottom  = CENTER_Y - (h/2);
+
+    for(i = 0; i < MAX_H; i++) {
+        for(j = 0; j < MAX_W; j++) {
+            if((i <= top && i >= bottom) && (j <= (CENTER_X + w) && j >= (CENTER_X - w))) {
+                *((main_arr+(main_arr_i*main_arr_size_j)) + main_arr_j) = true;
                 print = true;
             }
+            main_arr_j++;
         }
         if(print == true) {
             w++;
             print = false;
         }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
-}
-
-void draw_triangle(int coord[N][N]) {
-    int i, j;
-
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if(coord[j][i] == 1) {
-                printf("*");
-            }
-            else {
-                printf(" ");
-            }
-        }
-        printf("\n");
-    }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 //Ring
 //------------------------------------------------------------------------
 
-void fill_ring(int coor[N][N], int r1, int r2) {
-    int i, j;
+void fill_ring(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
+    size_t r1, r2;
+    ssize_t i, j;
 
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if(pow(i-((N-1)/2), 2) + pow(j-((N-1)/2), 2) < pow(r1, 2) && !(pow(i-((N-1)/2), 2) + pow(j-((N-1)/2), 2) < pow(r2, 2))) {
-                coor[j][i] = 1;
+    printf("\nEnter outer circle: ");
+    scanf("%zu", &r1);
+    printf("Enter inner circle: ");
+    scanf("%zu", &r2);
+
+    for (i = 0; i < MAX_H; i++) {
+        for (j = 0; j < MAX_W; j++) {
+            if (pow(i - CENTER_Y, 2) + pow(j - CENTER_X, 2) < pow(r1, 2) && !(pow(i - CENTER_Y, 2) + pow(j - CENTER_X, 2) < pow(r2, 2))) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
+            main_arr_j++;
         }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
-}
-
-void draw_ring(int coor[N][N]) {
-    int i, j;
-
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if(coor[j][i] == 1) {
-                printf("%c", font);
-            }
-            else {
-                printf(" ");
-            }
-        }
-        printf("\n");
-    }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 //Rectangular Frame
 //------------------------------------------------------------------------
+void fill_frame(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t w, h, t;
+    size_t i, j;
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
 
+    printf("\nPlease enter height of your Rectangular Frame: ");
+    scanf("%zu", &h);
+    printf("Please enter width of your Rectangular Frame: ");
+    scanf("%zu", &w);
+    printf("Please enter thickness of your Rectangular Frame: ");
+    scanf("%zu", &t);
+    t--;
 
+    size_t left_end =   CENTER_X - (w/2);
+    size_t right_end=   CENTER_X + (w/2) + even_odd(w);
+    size_t top      =   CENTER_Y - (h/2);
+    size_t bottom   =   CENTER_Y + (h/2) + even_odd(h);
 
-
+    for (i = 0; i < MAX_H; i++){
+        for (j = 0; j < MAX_W; j++){
+            if (((j >= left_end && j <= left_end+t) || (j <= right_end && j >= right_end-t)) && (i <= bottom && i >= top)){
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
+            }
+            else if (((i >= top && i <= top+t) || (i <= bottom && i >= bottom-t)) && ((j <= right_end-t) && (j >= left_end+t))){
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
+            }
+            main_arr_j++;
+        }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
+    }
+    (*pattern_number)++;
+}
 
 //------------------------------------------------------------------------
 //Plus Sign
 //------------------------------------------------------------------------
 
-void fill_plus(int coord[N][N], int w, int h) {
-    int i,j;
+void fill_plus(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t w, h;
+    size_t i, j;
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
 
-    int center  =   (N-1)/2;
-    int leftEnd =   center - (w/2);
-    int rightEnd=   center + (w/2) + even_odd(w);
-    int top     =   center - (h/2);
-    int bottom  =   center + (h/2) + even_odd(h);
+    printf("\nEnter height of your plus: ");
+    scanf("%zu", &h);
+    printf("Enter width of your plus: ");
+    scanf("%zu", &w);
 
-    for(j = 0; j < N; j++){
-        for(i = 0; i < N; i++){
-            if(i == center && (j<=bottom && j>=top)){
-                coord[j][i]=1;
+    size_t left_end =   CENTER_X - (w/2);
+    size_t right_end=   CENTER_X + (w/2) + even_odd(w);
+    size_t top     =   CENTER_Y - (h/2);
+    size_t bottom  =   CENTER_Y + (h/2) + even_odd(h);
+
+    for (i = 0; i < MAX_H; i++) {
+        for (j = 0; j < MAX_W; j++) {
+            if (j == CENTER_X && (i <= bottom && i >= top)) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
-            else if(j == center && (i<=rightEnd && i>=leftEnd) ){
-            	coord[j][i]=1;
+            else if(i == CENTER_Y && (j <= right_end && j >= left_end) ){
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
+            main_arr_j++;
 	    }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
-}
-
-void draw_plus(int coord[N][N]) {
-
-    int i, j;
-
-    for(j = 0; j < N; j++) { 
-        for(i = 0; i < N; i++) {
-            if(coord[j][i] == 1) {
-                printf("%c", font);
-            }
-            else {
-                printf(" ");
-            }
-        }
-        printf("\n");
-    }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 // X
 //------------------------------------------------------------------------
 
-double f(double x, double alpha) {
-    double y = tan(alpha) * x;
+void fill_x(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t alpha, length;
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
 
-    return y;
-}
+    printf("\nPlease enter degree of your X: ");
+    scanf("%zu", &alpha);
+    printf("Please enter the length of your X: ");
+    scanf("%zu", &length);
 
-void fill_x(double coord[K][K], double alpha) {
-    unsigned short r, c;
-    double x = -10;
+    const ssize_t length_x = cos(alpha * M_PI / 180) * length;
+    const ssize_t length_y = sin(alpha * M_PI / 180) * length;
+    const ssize_t x2 = CENTER_X + length_x;
+    const ssize_t y2 = CENTER_Y + length_y; 
 
-    for (r = 0; r < 201; r++) {
-        for (c = 0; c < 201; c++) {
-            coord[r][c] = f(x, alpha);
-            x += 0.1;
+    ssize_t x = CENTER_X - length_x;
+    ssize_t y = CENTER_Y - length_y;
+    const ssize_t dx = (x2 - x);
+    const ssize_t dy = (y2 - y);
+    int e = 0;
+
+    while ((x <= x2) && (y <= y2)) {
+        *((main_arr + ((main_arr_i + y) * main_arr_size_j)) + (main_arr_j + x)) = true;
+        *((main_arr + ((main_arr_i + y) * main_arr_size_j)) + (main_arr_j + (2*CENTER_X - x))) = true;
+        if (2*(e+dy) < dx) {
+            x++;
+            e += dy;
         }
-        x = -10;
-    }
-}
-
-void draw_x(double coord[K][K], unsigned short length) {
-    unsigned short r, c, center = (K-1)/2;
-    double y = length;
-    y /= 10;
-
-    for (r = center - length; r < center + length; r++) {
-        for (c = center - length; c < center + length; c++) {
-            //printf("%lf - %lf = %lf\n", y, coord[r][c], y - coord[r][c]);
-            if ((y - coord[r][c]) < 0.1 && (y - coord[r][c]) > -0.1) {
-                printf("*");
-            }
-            else if ((y - (-coord[r][c]) < 0.1) && (y - (-coord[r][c]) > -0.1)) {
-                printf("*");
-            }
-            else {
-                printf(" ");
-            }
+        else if ((2*(e+dy) < 3*dx) && (2*(e+dy) >= dx)) {
+            x++;
+            y++;
+            e = e + dy - dx;
         }
-        y -= 0.1;
-        printf("\n");
+        else {
+            y++;
+            e -= dx;
+        }
     }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 // T
 //------------------------------------------------------------------------
 
-void fill_t(int coord[N][N], int w, int h) {
-    int i, j;
-    int center  =   (N-1)/2;
-    int leftEnd =   center - (w/2);
-    int rightEnd=   center + (w/2) + even_odd(w);
-    int top     =   center - (h/2);
-    int bottom  =   center + (h/2) + even_odd(h);
+void fill_t(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
+    size_t w, h;
+    size_t i, j;
 
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if((i <= rightEnd && i >= leftEnd) && j == top) {
-                coord[j][i] = 1;
+    printf("\nPlease enter height of your T: ");
+    scanf("%zu", &h);
+    printf("Please enter width of your T: ");
+    scanf("%zu", &w);
+
+    const size_t left_end    =   CENTER_X - (w/2);
+    const size_t right_end   =   CENTER_X + (w/2) + even_odd(w);
+    const size_t top         =   CENTER_Y - (h/2);
+    const size_t bottom      =   CENTER_Y + (h/2) + even_odd(h);
+
+    for(i = 0; i < MAX_H; i++) {
+        for(j = 0; j < MAX_W; j++) {
+            if((j <= right_end && j >= left_end) && i == top) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
-            if(i == center && (j <= bottom && j >= top)) {
-                coord[j][i] = 1;
+            if(j == CENTER_X && (i <= bottom && i >= top)) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
+            main_arr_j++;
         }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
-}
-
-void draw_t(int coord[N][N]) {
-    int i, j;
-
-    for(j = 0; j<= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if(coord[j][i] == 1) {
-                printf("%c", font);
-            }
-            else {
-                printf(" ");
-            }
-        }
-        printf("\n");
-    }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------
 // H
 //------------------------------------------------------------------------
 
-void fill_h(int coord[N][N], int w, int h) {
-    int i, j;
+void fill_h(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size_t column_number) {
+    size_t main_arr_i = MAX_H * column_number;
+    size_t main_arr_j = MAX_W * (*pattern_number);
+    size_t w, h;
+    size_t i, j;
 
-    int center      =   (N-1)/2;
-    int leftEnd     =   center - (w/2);
-    int rightEnd    =   center + (w/2) + even_odd(w);
-    int bottom      =   center - (h/2);
-    int top         =   center + (h/2) + even_odd(h);
+    printf("\nPlease enter height of your H: ");
+    scanf("%zu", &h);
+    printf("Please enter width of your H: ");
+    scanf("%zu", &w);
 
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if((i == leftEnd || i == rightEnd) && (j <= top && j >= bottom)) {
-                coord[i][j] = 1;
+    int left_end    =   CENTER_X - (w/2);
+    int right_end   =   CENTER_X + (w/2) + even_odd(w);
+    int bottom      =   CENTER_Y - (h/2);
+    int top         =   CENTER_Y + (h/2) + even_odd(h);
+
+    for (i = 0; i < MAX_H; i++) {
+        for(j = 0; j < MAX_W; j++) {
+            if((j == left_end || j == right_end) && (i <= top && i >= bottom)) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
-            if((i <= rightEnd && i >= leftEnd) && j == center) {
-                coord[i][j] = 1;
+            if((j <= right_end && j >= left_end) && i == CENTER_Y) {
+                *((main_arr + (main_arr_i * main_arr_size_j)) + main_arr_j) = true;
             }
+            main_arr_j++;
         }
+        main_arr_j = MAX_W * (*pattern_number);
+        main_arr_i++;
     }
-}
-
-void draw_h(int coord[N][N]) {
-    int i, j;
-
-    for(j = 0; j <= N-1; j++) {
-        for(i = 0; i <= N-1; i++) {
-            if(coord[i][j] == 1) {
-                printf("%c", font);
-            }
-            else {
-                printf(" ");
-            }
-        }
-        printf("\n");
-    }
+    (*pattern_number)++;
 }
 
 //------------------------------------------------------------------------

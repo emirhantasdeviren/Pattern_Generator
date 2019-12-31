@@ -1,4 +1,4 @@
-void menu(unsigned short *r, unsigned short *c) {
+void menu(size_t *r, size_t *c) {
     printf("\n\tWelcome to Pattern Generator\n"
            "\t----------------------------\n"
            "\tFirst, enter how many rows and number of patterns per row.\n"
@@ -13,8 +13,8 @@ void menu(unsigned short *r, unsigned short *c) {
            "\t8. T\n"
            "\t9. H\n\n"
            "Please enter the number of rows: ");
-    scanf("%hu", r);
+    scanf("%zu", r);
     printf("Please enter the number of patterns per row: ");
-    scanf("%hu", c);
+    scanf("%zu", c);
     printf("\n");
 }
