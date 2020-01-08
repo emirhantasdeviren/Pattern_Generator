@@ -1,6 +1,6 @@
 #define K 201
 #define N 21
-#define font '*'
+#define M_PI 3.14159265358979323846
 
 #define MAX_W 640
 #define MAX_H 360
