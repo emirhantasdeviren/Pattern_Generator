@@ -11,7 +11,7 @@ Write the following base pattern functions to record them to this array.
 - Isosceles Triangle
 - Ring
 - Rectangular Frame
-- Plus Sign
+- +
 - X
 - T
 - H
