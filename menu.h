@@ -8,7 +8,7 @@ void menu(size_t *r, size_t *c) {
            "\t3. Isosceles Triangle\n"
            "\t4. Ring\n"
            "\t5. Rectangular Frame\n"
-           "\t6. +\n"
+           "\t6. Plus Sign\n"
            "\t7. X\n"
            "\t8. T\n"
            "\t9. H\n\n"
