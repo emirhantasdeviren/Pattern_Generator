@@ -1,4 +1,4 @@
-void menu(size_t *r, size_t *c) {
+void menu(size_t *r, size_t *c, size_t *repeat) {
     printf("\n\tWelcome to Pattern Generator\n"
            "\t----------------------------\n"
            "\tFirst, enter how many rows and number of patterns per row.\n"
@@ -8,7 +8,7 @@ void menu(size_t *r, size_t *c) {
            "\t3. Isosceles Triangle\n"
            "\t4. Ring\n"
            "\t5. Rectangular Frame\n"
-           "\t6. Plus Sign\n"
+           "\t6. +\n"
            "\t7. X\n"
            "\t8. T\n"
            "\t9. H\n\n"
@@ -16,5 +16,7 @@ void menu(size_t *r, size_t *c) {
     scanf("%zu", r);
     printf("Please enter the number of patterns per row: ");
     scanf("%zu", c);
+    printf("Do you want to repeat your pattern? (0 if no): ");
+    scanf("%zu", repeat);
     printf("\n");
 }

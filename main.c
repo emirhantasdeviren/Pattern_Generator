@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <stddef.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <stddef.h>
 #include "pattern.h"
 #include "menu.h"
 
@@ -10,13 +10,14 @@
 #define MAX_H 360
 
 int main(void) {
-    size_t r, c;
+    size_t r, c, repeat;
     FILE *fptr;
 
-    menu(&r, &c);
+    menu(&r, &c, &repeat);
+    repeat++;
     
     size_t pattern_assign[r][c], pattern_number = 0, column_number = 0;
-    size_t main_arr_size_i = MAX_H * r, main_arr_size_j = MAX_W * c;
+    size_t main_arr_size_i = MAX_H * r, main_arr_size_j = MAX_W * c * repeat;
     size_t i, j;
     bool main_arr[main_arr_size_i][main_arr_size_j];
 
@@ -65,6 +66,16 @@ int main(void) {
         }
         column_number++;
         pattern_number = 0;
+    }
+
+    if (repeat > 1) {
+        for (size_t count = 1; count < repeat; count++) {
+            for (i = 0; i < main_arr_size_i; i++) {
+                for (j = 0; j < main_arr_size_j / repeat; j++) {
+                    main_arr[i][((main_arr_size_j / repeat) * count) + j] = main_arr[i][j];
+                }
+            }
+        }
     }
 
     fptr = fopen("output.pbm", "w");
