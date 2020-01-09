@@ -16,7 +16,7 @@ void menu(size_t *r, size_t *c, size_t *repeat) {
     scanf("%zu", r);
     printf("Please enter the number of patterns per row: ");
     scanf("%zu", c);
-    printf("Do you want to repeat your pattern? (0 if no): ");
+    printf("How many times do you want to repeat your pattern? (0 if no): ");
     scanf("%zu", repeat);
     printf("\n");
 }
