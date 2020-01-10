@@ -1,7 +1,7 @@
-#define K 201
-#define N 21
-#define M_PI 3.14159265358979323846
+#ifndef PATTERN_H
+#define PATTERN_H
 
+#define M_PI 3.14159265358979323846
 #define MAX_W 640
 #define MAX_H 360
 #define CENTER_X 320
@@ -332,3 +332,5 @@ void fill_h(bool *main_arr, size_t main_arr_size_j, size_t *pattern_number, size
 }
 
 //------------------------------------------------------------------------
+
+#endif

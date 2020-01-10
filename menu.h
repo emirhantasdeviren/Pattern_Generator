@@ -1,3 +1,6 @@
+#ifndef MENU_H
+#define MENU_H
+
 void menu(size_t *r, size_t *c, size_t *repeat) {
     printf("\n\tWelcome to Pattern Generator\n"
            "\t----------------------------\n"
@@ -20,3 +23,5 @@ void menu(size_t *r, size_t *c, size_t *repeat) {
     scanf("%zu", repeat);
     printf("\n");
 }
+
+#endif
