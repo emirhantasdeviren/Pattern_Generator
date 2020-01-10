@@ -19,11 +19,11 @@ int main(void) {
     size_t pattern_assign[r][c], pattern_number = 0, column_number = 0;
     size_t main_arr_size_i = MAX_H * r, main_arr_size_j = MAX_W * c * repeat;
     size_t i, j;
-    bool main_arr[main_arr_size_i][main_arr_size_j];
+    bool *main_arr = (bool *)malloc(main_arr_size_i * main_arr_size_j * sizeof(bool));
 
     for (i = 0; i < main_arr_size_i; i++) {
         for (j = 0; j < main_arr_size_j; j++) {
-            main_arr[i][j] = false;
+            *(main_arr + (main_arr_size_j * i) + j) = false;
         }
     }
 
@@ -72,7 +72,7 @@ int main(void) {
         for (size_t count = 1; count < repeat; count++) {
             for (i = 0; i < main_arr_size_i; i++) {
                 for (j = 0; j < main_arr_size_j / repeat; j++) {
-                    main_arr[i][((main_arr_size_j / repeat) * count) + j] = main_arr[i][j];
+                    *(main_arr + ((main_arr_size_j * i) + (main_arr_size_j / repeat) * count) + j) = *(main_arr + (main_arr_size_j * i) + j);
                 }
             }
         }
@@ -84,7 +84,7 @@ int main(void) {
 
     for (i = 0; i < main_arr_size_i; i++) {
         for (j = 0; j < main_arr_size_j; j++) {
-            if (main_arr[i][j]) {
+            if (*(main_arr + (main_arr_size_j * i) + j)) {
                 fprintf(fptr, "1");
             }
             else {
@@ -95,6 +95,7 @@ int main(void) {
     }
 
     fclose(fptr);
+    free(main_arr);
 
     return 0;
 }
